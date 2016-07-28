@@ -1,0 +1,5 @@
+.settings/**
+lib/gsl/**
+Release/**
+.cproject
+.project
