@@ -6,9 +6,11 @@
  */
 
 #include <gsl/gsl_rng.h>
+#include <stdexcept>
 #include <exception>
 #include <list>
 #include "position.h"
+#include "function.h"
 
 namespace emceecee {
 	
@@ -51,24 +53,25 @@ public:
 
 	void sample(Position const * pos0, unsigned int iterations, std::list<MCMCResult*> * results);
 
-	MCMCResult * runMCMC(Position const * pos0, unsigned int iterations) {
+	MCMCResult * runMCMC(Position const * pos0, unsigned int iterations) {	
+
 		if (!pos0) {
 			if (lastResult) {
 				throw new std::runtime_error(
 						"Cannot have pos0 = nullptr if runMCMC has never been called");
 			}
 
-			pos0 = lastResult->pos;
-
+			pos0 = &lastResult->pos;
 		}
+
 
 		std::list<MCMCResult * > * results = new std::list<MCMCResult*>(iterations);
 
 		this->sample(pos0, iterations, results);
-		lastResult = result->pop_back();
+		lastResult = results->back();
 
 		// delete all other elements from the list
-		for(std::list<MCMCResult*>::iterator it=results.begin(); it != results.end(); ++it) {
+		for(std::list<MCMCResult*>::iterator it=results->begin(); it != results->end(); ++it) {
 			delete *it;
 		}
 
@@ -77,7 +80,7 @@ public:
 		return lastResult;
 	}
 
-private:
+protected:
 	Function * lnprob;
 	int dimension;
 	gsl_rng * rng;

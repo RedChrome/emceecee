@@ -9,7 +9,7 @@
 #define MHSAMPLER_H_
 
 #include "sampler.cpp"
-#include "lib/gsl/matrix/gsl_matrix.h"
+#include <gsl/gsl_matrix.h>
 #include <list>
 
 namespace emceecee {
@@ -19,12 +19,11 @@ public:
 	MHSampler(int dimension, Function * lnprob, const gsl_matrix *cov,
 			gsl_rng * rng = nullptr);
 	virtual ~MHSampler();
-	//void sample(Position * pos0, unsigned int iterations,
-	//		std::list<MCMCResult *>* results);
+	void sample(Position const * pos0, unsigned int iterations, std::list<MCMCResult *>* results);
 
 private:
 	// covariance matrix
-	gsl_matrix * cov;
+	gsl_matrix const * cov;
 	// update vector needed to calculate new proposal
 	gsl_vector * q;
 };

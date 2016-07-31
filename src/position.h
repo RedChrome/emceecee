@@ -8,9 +8,10 @@
 #ifndef POSITION_H_
 #define POSITION_H_
 
-namespace emceecee {
-
 #include <vector>
+#include <gsl/gsl_vector.h>
+
+namespace emceecee {
 
 class Position {
 public:

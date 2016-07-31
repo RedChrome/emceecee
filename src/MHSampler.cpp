@@ -7,13 +7,15 @@
 
 #include "MHSampler.h"
 #include <list>
-#include "lib/gsl/matrix/gsl_matrix.h"
-#include "lib/gsl/vector/gsl_vector.h"
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_sf_exp.h>
+#include "util.cpp"
 
 namespace emceecee {
 
 MHSampler::MHSampler(int dimension, Function * lnprob, gsl_matrix const * cov,
-		gsl_rng * rng = nullptr) :
+		gsl_rng * rng) :
 		Sampler(dimension, lnprob, rng) {
 	this->cov = cov;
 	this->q = gsl_vector_alloc(this->dimension);

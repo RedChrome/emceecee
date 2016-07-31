@@ -12,7 +12,7 @@ namespace emceecee {
 
 class Function {
 	public:
-		double evaluate(Position * x);
+		double evaluate(Position const * x);
 };
 
 }
