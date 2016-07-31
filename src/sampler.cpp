@@ -5,12 +5,13 @@
  *      Author: Alex
  */
 
-namespace emceecee {
-
-#include "lib/gsl/rng/gsl_rng.h"
+#include <gsl/gsl_rng.h>
 #include <exception>
 #include <list>
+#include "position.h"
 
+namespace emceecee {
+	
 struct MCMCResult {
 	Position pos;
 	double lnprob;
@@ -54,7 +55,7 @@ public:
 		if (!pos0) {
 			if (lastResult) {
 				throw new std::runtime_error(
-						'Cannot have pos0 = nullptr if runMCMC has never been called');
+						"Cannot have pos0 = nullptr if runMCMC has never been called");
 			}
 
 			pos0 = lastResult->pos;

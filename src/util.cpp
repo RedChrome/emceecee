@@ -9,10 +9,12 @@
 #define UTIL_CPP_
 
 
-#include "lib/gsl/matrix/gsl_matrix.h"
-#include "lib/gsl/linalg/gsl_linalg.h"
-#include "lib/gsl/vector/gsl_vector.h"
-#include "lib/gsl/blas/gsl_blas.h"
+#include <gsl/gsl_rng.h>
+#include <gsl/gsl_randist.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_linalg.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_blas.h>
 
 namespace emceecee {
 
