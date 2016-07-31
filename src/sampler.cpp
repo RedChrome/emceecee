@@ -48,9 +48,9 @@ public:
 		this->accepted = 0;
 	}
 
-	std::list<MCMCResult *>* sample(Position * pos0, unsigned int iterations);
+	void sample(Position const * pos0, unsigned int iterations, std::list<MCMCResult*> * results);
 
-	MCMCResult * runMCMC(Position * pos0, unsigned int iterations) {
+	MCMCResult * runMCMC(Position const * pos0, unsigned int iterations) {
 		if (!pos0) {
 			if (lastResult) {
 				throw new std::runtime_error(
@@ -61,8 +61,17 @@ public:
 
 		}
 
-		std::list<MCMCResult *> result = this->sample(pos0, iterations);
-		lastResult = result->back();
+		std::list<MCMCResult * > * results = new std::list<MCMCResult*>(iterations);
+
+		this->sample(pos0, iterations, results);
+		lastResult = result->pop_back();
+
+		// delete all other elements from the list
+		for(std::list<MCMCResult*>::iterator it=results.begin(); it != results.end(); ++it) {
+			delete *it;
+		}
+
+		delete results;
 
 		return lastResult;
 	}

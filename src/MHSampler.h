@@ -14,17 +14,19 @@
 
 namespace emceecee {
 
-class MHSampler: public Sampler {
+class MHSampler: public virtual Sampler {
 public:
-	MHSampler(int dimension, Function * lnprob, const gsl_matrix *cov, gsl_rng * rng = nullptr);
+	MHSampler(int dimension, Function * lnprob, const gsl_matrix *cov,
+			gsl_rng * rng = nullptr);
 	virtual ~MHSampler();
-	std::list<MCMCResult *>* sample(Position * pos0, unsigned int iterations)
+	//void sample(Position * pos0, unsigned int iterations,
+	//		std::list<MCMCResult *>* results);
 
 private:
-		// covariance matrix
-		gsl_matrix * cov;
-		// update vector needed to calculate new proposal
-		gsl_vector * q;
+	// covariance matrix
+	gsl_matrix * cov;
+	// update vector needed to calculate new proposal
+	gsl_vector * q;
 };
 
 } /* namespace emceecee */

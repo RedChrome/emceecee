@@ -12,7 +12,7 @@
 
 namespace emceecee {
 
-MHSampler::MHSampler(int dimension, Function * lnprob, const gsl_matrix *cov,
+MHSampler::MHSampler(int dimension, Function * lnprob, gsl_matrix const * cov,
 		gsl_rng * rng = nullptr) :
 		Sampler(dimension, lnprob, rng) {
 	this->cov = cov;
@@ -23,12 +23,8 @@ MHSampler::~MHSampler() {
 	gsl_vector_free(this->q);
 }
 
-std::list<MCMCResult *>* MHSampler::sample(Position * pos0,
-		unsigned int iterations) {
-
-	unsigned int i0 = this->iterations;
-
-	std::list<MCMCResult *>* results = new std::list<MCMCResult *>(iterations);
+void MHSampler::sample(Position const * pos0, unsigned int iterations,
+		std::list<MCMCResult *> * results) {
 
 	gsl_vector * p = pos0->position;
 
@@ -67,8 +63,6 @@ std::list<MCMCResult *>* MHSampler::sample(Position * pos0,
 
 		results->push_back(result);
 	}
-
-	return results;
 }
 
 } /* namespace emceecee */
