@@ -62,7 +62,7 @@ public:
 		int iterations_;
 		bool limited_;
 	};
-
+/*
 	class const_iterator {
 	public:
 		typedef const_iterator self_type;
@@ -104,7 +104,7 @@ public:
 		int iterations_;
 		bool limited_;
 	};
-
+*/
 	iterator begin() {
 		return iterator(this->current_iterator_result, this);
 	}
@@ -112,7 +112,7 @@ public:
 	iterator end(int iterations = -1) {
 		return iterator(this->current_iterator_result, this, iterations, iterations > -1);
 	}
-
+/*
 	const_iterator begin() const {
 		return const_iterator(this->current_iterator_result, this);
 	}
@@ -120,6 +120,7 @@ public:
 	const_iterator end(int iterations = -1) const {
 		return const_iterator(this->current_iterator_result, this, iterations, iterations > -1);
 	}
+*/
 
 protected:
 	void next();

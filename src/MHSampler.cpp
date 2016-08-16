@@ -90,8 +90,8 @@ void MHSampler::next() {
 	}
 
 	if (diff > 0) {
-		gsl_vector_memcpy(this->current_iterator_result->pos.position, this->next_iterator_result->pos.position)
-		this->current_iterator_result->lnprob = this->next_iterator_result->lnprob
+		gsl_vector_memcpy(this->current_iterator_result->pos.position, this->next_iterator_result->pos.position);
+		this->current_iterator_result->lnprob = this->next_iterator_result->lnprob;
 		this->accepted++;
 	}
 }
