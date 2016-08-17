@@ -20,7 +20,6 @@ public:
 	MHSampler(int dimension, Function * lnprob, const gsl_matrix *cov, gsl_rng * rng = nullptr);
 	virtual ~MHSampler();
 	void sample(Position const * pos0, unsigned int iterations, std::list<MCMCResult *>* results);
-
 	class iterator {
 	public:
 		typedef iterator self_type;
@@ -34,14 +33,12 @@ public:
 		}
 		self_type operator++() {
 			sampler_->next();
-			iterations_++;
+			++iterations_;
 			return *this;
 		}
 		self_type operator++(int junk) {
-			for (int i = 0; i < junk; i++) {
-				sampler_->next();
-				iterations_++;
-			}
+			sampler_->next();
+			++iterations_;
 			return *this;
 		}
 		reference operator*() {
@@ -105,7 +102,8 @@ public:
 		bool limited_;
 	};
 */
-	iterator begin() {
+	iterator begin(Position * pos0) {
+		this->set_position_for_iterator(pos0);
 		return iterator(this->current_iterator_result, this);
 	}
 
@@ -122,8 +120,18 @@ public:
 	}
 */
 
+	MCMCResult * current_iterator_result;
+
 protected:
 	void next();
+	void set_position_for_iterator(Position * pos0) {
+		if(!pos0) 
+			return;
+
+		this->current_iterator_result->pos = *pos0;
+		this->current_iterator_result->lnprob = this->lnprob->evaluate(pos0);
+	}
+
 
 private:
 	// covariance matrix
@@ -131,7 +139,7 @@ private:
 	// update vector needed to calculate new proposal
 	gsl_vector * q;
 
-	MCMCResult * current_iterator_result;
+//	MCMCResult * current_iterator_result;
 	MCMCResult * next_iterator_result;
 
 };

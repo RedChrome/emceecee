@@ -11,3 +11,7 @@ add_library (emceecee src/position
 			src/util
 			src/MHSampler
 	)	
+
+add_executable (test_rosenbrock tests/rosenbrock)
+
+target_link_libraries (test_rosenbrock emceecee ${GSL_LIBRARIES})

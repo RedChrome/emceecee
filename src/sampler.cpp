@@ -14,7 +14,11 @@
 
 namespace emceecee {
 	
-struct MCMCResult {
+class MCMCResult {
+public:
+	MCMCResult(int dimension) : pos(Position(dimension)) {
+	}
+
 	Position pos;
 	double lnprob;
 };
@@ -51,7 +55,7 @@ public:
 		this->accepted = 0;
 	}
 
-	void sample(Position const * pos0, unsigned int iterations, std::list<MCMCResult*> * results);
+	virtual void sample(Position const * pos0, unsigned int iterations, std::list<MCMCResult*> * results) = 0;
 
 	MCMCResult * runMCMC(Position const * pos0, unsigned int iterations) {	
 
@@ -72,7 +76,7 @@ public:
 
 		// delete all other elements from the list
 		for(std::list<MCMCResult*>::iterator it=results->begin(); it != results->end(); ++it) {
-			delete *it;
+//			delete *it;
 		}
 
 		delete results;
