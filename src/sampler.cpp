@@ -25,13 +25,20 @@ public:
 	Sampler(int dimension, Function * lnprob, gsl_rng * rng = nullptr) {
 		this->dimension = dimension;
 		this->lnprob = lnprob;
+		this->created_rng = false;
 
 		if (!rng) {
 			this->rng = gsl_rng_alloc(gsl_rng_mt19937);
+			this->created_rng = true;
 		}
 		this->lastResult = nullptr;
 		this->iterations = 0;
 		this->accepted = 0;
+	}
+
+	virtual ~Sampler(){
+		if(this->created_rng)
+			gsl_rng_free(rng);
 	}
 
 	void setRandomNumberGenerator(gsl_rng * rng) {
@@ -87,6 +94,7 @@ protected:
 	unsigned int accepted;
 	unsigned int iterations;
 	MCMCResult * lastResult;
+	bool created_rng;
 
 };
 
