@@ -8,6 +8,7 @@
 #ifndef GMHSAMPLER_H_
 #define GMHSAMPLER_H_
 
+#include "proposal/Function.h"
 #include "sampler.cpp"
 #include "sampler.cpp"
 #include <gsl/gsl_matrix.h>
@@ -18,7 +19,7 @@ namespace emceecee {
 
 typedef void (*MHProposalFunction)(const gsl_rng *, const int, const gsl_vector *, gsl_vector *);
 
-class GMHSampler: public Sampler {
+class GMHSampler: public virtual Sampler {
 public:
 	GMHSampler(int dimension, Function * lnprob, MHProposalFunction proposalfct, gsl_rng * rng = nullptr);
 	virtual ~GMHSampler();
@@ -83,7 +84,7 @@ protected:
 		this->current_iterator_result->lnprob = this->lnprob->evaluate(pos0);
 	}
 
-	void set_proposal(MHProposalFunction proposalfct) {
+	void set_proposal(proposal::Function * proposalfct) {
 		this->proposalfct = proposalfct;	
 	}
 
@@ -93,7 +94,7 @@ private:
 
 	MCMCResult * current_iterator_result;
 	MCMCResult * next_iterator_result;
-	MHProposalFunction proposalfct;
+	proposal::Function * proposalfct;
 };
 
 } /* namespace emceecee */

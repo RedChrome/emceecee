@@ -10,6 +10,7 @@
 
 #include "GMHSampler.h"
 #include <gsl/gsl_matrix.h>
+#include "proposal/Function.h"
 
 namespace emceecee {
 
@@ -18,11 +19,10 @@ public:
 	MHSampler(int dimension, Function * lnprob, const gsl_matrix *cov, gsl_rng * rng = nullptr);
 	virtual ~MHSampler();
 
-	virtual void normaldistributionproposal(const gsl_rng * rng, const int dimension, const gsl_vector * currentpos, gsl_vector * proposalpos);
-
 private:
 	// covariance matrix
 	gsl_matrix const * cov;
+	proposal::Function * proposalfct;
 };
 
 } /* namespace emceecee */

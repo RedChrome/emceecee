@@ -45,7 +45,7 @@ void GMHSampler::sample(Position const * pos0, unsigned int iterations, std::lis
 		this->iterations++;
 
 		// Calculate proposal distribution into q
-		proposalfct(this->rng, this->dimension, p, this->q);
+		proposalfct->propose(p, this->q);
 		// note that newpos contains the pointer q, and
 		// q was updated in the call before.
 		newlnprob = this->lnprob->evaluate(newpos);
@@ -90,7 +90,7 @@ void GMHSampler::next() {
 	this->iterations++;
 
 	// Calculate proposal distribution into next_pos
-	proposalfct(this->rng, this->dimension, this->current_iterator_result->pos.position, this->next_iterator_result->pos.position);
+	proposalfct->propose(this->current_iterator_result->pos.position, this->next_iterator_result->pos.position);
 	// evaluate lnprob at proposal position
 	this->next_iterator_result->lnprob = this->lnprob->evaluate(&this->next_iterator_result->pos);
 
