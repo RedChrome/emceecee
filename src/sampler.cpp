@@ -5,6 +5,9 @@
  *      Author: Alex
  */
 
+#ifndef SAMPLER_CPP_
+#define SAMPLER_CPP_
+
 #include <gsl/gsl_rng.h>
 #include <stdexcept>
 #include <exception>
@@ -103,3 +106,5 @@ protected:
 };
 
 }
+
+#endif

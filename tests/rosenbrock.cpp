@@ -49,7 +49,7 @@ int main(int argc, char * argv[]) {
 	for(;it != sampler->end(500); it++) {
 		emceecee::MCMCResult result = *it;
 //		std::cout << it->pos.str() << std::endl;
-		std::cout << sampler->current_iterator_result->pos.str() << std::endl;
+//		std::cout << sampler->current_iterator_result->pos.str() << std::endl;
 	}
 
 //	std::cout << result->pos.str() << std::endl;

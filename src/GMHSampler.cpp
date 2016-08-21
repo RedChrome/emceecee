@@ -11,7 +11,6 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_sf_exp.h>
-#include "util.cpp"
 
 namespace emceecee {
 

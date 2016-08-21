@@ -32,7 +32,7 @@ public:
 		typedef MCMCResult* pointer;
 		typedef std::forward_iterator_tag iterator_category;
 		typedef int difference_type;
-		iterator(pointer ptr, MHSampler * sampler, int iterations = 0, bool limited = true) :
+		iterator(pointer ptr, GMHSampler * sampler, int iterations = 0, bool limited = true) :
 				ptr_(ptr), sampler_(sampler), iterations_(iterations), limited_(limited) {
 		}
 		self_type operator++() {
@@ -59,7 +59,7 @@ public:
 		}
 	private:
 		pointer ptr_;
-		MHSampler * sampler_;
+		GMHSampler * sampler_;
 		int iterations_;
 		bool limited_;
 	};
@@ -81,6 +81,10 @@ protected:
 
 		this->current_iterator_result->pos = *pos0;
 		this->current_iterator_result->lnprob = this->lnprob->evaluate(pos0);
+	}
+
+	void set_proposal(MHProposalFunction proposalfct) {
+		this->proposalfct = proposalfct;	
 	}
 
 private:

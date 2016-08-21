@@ -18,7 +18,7 @@ public:
 	MHSampler(int dimension, Function * lnprob, const gsl_matrix *cov, gsl_rng * rng = nullptr);
 	virtual ~MHSampler();
 
-	void normaldistributionproposal(const gsl_rng * rng, const int dimension, const gsl_vector * currentpos, gsl_vector * proposalpos);
+	virtual void normaldistributionproposal(const gsl_rng * rng, const int dimension, const gsl_vector * currentpos, gsl_vector * proposalpos);
 
 private:
 	// covariance matrix
