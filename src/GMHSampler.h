@@ -16,7 +16,7 @@
 
 namespace emceecee {
 
-typedef void(*MHProposalFunction)(const gsl_rng *, const int, const gsl_vector *, gsl_vector *);
+typedef void (*MHProposalFunction)(const gsl_rng *, const int, const gsl_vector *, gsl_vector *);
 
 class GMHSampler: public Sampler {
 public:
@@ -37,14 +37,12 @@ public:
 		}
 		self_type operator++() {
 			sampler_->next();
-			iterations_++;
+			++iterations_;
 			return *this;
 		}
 		self_type operator++(int junk) {
-			for (int i = 0; i < junk; i++) {
-				sampler_->next();
-				iterations_++;
-			}
+			sampler_->next();
+			++iterations_;
 			return *this;
 		}
 		reference operator*() {
@@ -66,7 +64,8 @@ public:
 		bool limited_;
 	};
 
-	iterator begin() {
+	iterator begin(Position * pos0) {
+		this->set_position_for_iterator(pos0);
 		return iterator(this->current_iterator_result, this);
 	}
 
@@ -76,6 +75,13 @@ public:
 
 protected:
 	void next();
+	void set_position_for_iterator(Position * pos0) {
+		if (!pos0)
+			return;
+
+		this->current_iterator_result->pos = *pos0;
+		this->current_iterator_result->lnprob = this->lnprob->evaluate(pos0);
+	}
 
 private:
 	// update vector needed to calculate new proposal
