@@ -11,11 +11,11 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_sf_exp.h>
+#include "proposal/Function.h"
 
 namespace emceecee {
 
-GMHSampler::GMHSampler(int dimension, Function * lnprob, MHProposalFunction proposalfct, gsl_rng * rng) :
-		Sampler(dimension, lnprob, rng) {
+GMHSampler::GMHSampler(int dimension, Function * lnprob, proposal::Function *  proposalfct, gsl_rng * rng) : Sampler(dimension, lnprob, rng) {
 	this->q = gsl_vector_alloc(this->dimension);
 	this->proposalfct = proposalfct;
 	current_iterator_result = new MCMCResult(dimension);

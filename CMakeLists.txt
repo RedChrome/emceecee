@@ -11,6 +11,8 @@ add_library (emceecee src/position
 			src/util
 			src/MHSampler
 			src/GMHSampler
+			src/proposal/Function
+			src/proposal/NormalDistribution
 	)	
 
 add_executable (test_rosenbrock tests/rosenbrock)

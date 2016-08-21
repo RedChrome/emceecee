@@ -24,6 +24,11 @@ public:
 	Position(int dimension) {
 		position = gsl_vector_alloc(dimension);
 	}
+	
+	Position(gsl_vector * position)
+	{
+		this->position = position;
+	}
 
 	Position& operator=(Position rhs)
 	{

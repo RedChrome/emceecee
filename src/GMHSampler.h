@@ -17,11 +17,9 @@
 
 namespace emceecee {
 
-typedef void (*MHProposalFunction)(const gsl_rng *, const int, const gsl_vector *, gsl_vector *);
-
-class GMHSampler: public virtual Sampler {
+class GMHSampler: public Sampler {
 public:
-	GMHSampler(int dimension, Function * lnprob, MHProposalFunction proposalfct, gsl_rng * rng = nullptr);
+	GMHSampler(int dimension, Function * lnprob, proposal::Function * proposalfct, gsl_rng * rng = nullptr);
 	virtual ~GMHSampler();
 	void sample(Position const * pos0, unsigned int iterations, std::list<MCMCResult *>* results);
 

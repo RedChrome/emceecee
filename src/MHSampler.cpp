@@ -13,15 +13,16 @@
 #include <gsl/gsl_vector.h>
 #include "util.cpp"
 #include "proposal/NormalDistribution.h"
-
+#include <iostream>
 namespace emceecee {
 
 MHSampler::MHSampler(int dimension, Function * lnprob, gsl_matrix const * cov, gsl_rng * rng) :
-		GMHSampler(dimension, lnprob, nullptr, this->rng) { //MHSampler::normaldistributionproposal, this->rng) {
+		GMHSampler(dimension, lnprob, nullptr, this->rng) {
 	this->cov = cov;
-	this->proposalfct = new proposal::NormalDistribution(rng, dimension, cov);
+	// note that we need a working this->rng, since the given one (rng), may be a null ptr
+	// and this->rng will be created in GHMSampler if neccessary.
+	this->set_proposal(new proposal::NormalDistribution(this->rng, dimension, cov));
 }
-
 MHSampler::~MHSampler() {
 }
 
